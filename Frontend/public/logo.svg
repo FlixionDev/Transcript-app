@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 100">
+  <!-- Equalizer icon -->
+  <rect x="10" y="50" width="20" height="40" rx="5" ry="5" fill="#4F46E5" />
+  <rect x="40" y="30" width="20" height="60" rx="5" ry="5" fill="#4F46E5" />
+  <rect x="70" y="50" width="20" height="40" rx="5" ry="5" fill="#4F46E5" />
+  <!-- Text -->
+  <text x="110" y="85" font-family="Inter, sans-serif" font-size="55" fill="white">Transcribe.<tspan fill="#4F46E5">AI</tspan></text>
+</svg>
