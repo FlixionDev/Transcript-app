@@ -3,10 +3,16 @@ export default defineNuxtConfig({
   compatibilityDate: '2024-11-01',
   devtools: { enabled: true },
   components: true,
-  modules: ['@nuxtjs/tailwindcss', '@pinia/nuxt'],
-  css: ['@/assets/css/tailwind.css'],
-  // @ts-expect-error: pinia options are not typed by default
-  pinia: {
-    autoImports: ['defineStore'],
+  app: {
+    pageTransition: { name: 'page', mode: 'out-in' },
   },
+  modules: ['@nuxtjs/tailwindcss', '@pinia/nuxt'],
+  css: ['@/assets/css/tailwind.css', '@/assets/global.scss'],
+  pinia: {
+    storesDirs: ['./stores/**'],
+  },
+  plugins: [
+    '~/plugins/element-plus.js'  // Add the plugin here
+  ],
+  ssr: false,
 })

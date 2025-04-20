@@ -13,4 +13,8 @@ body {
   background: #101828;
   color: white;
 }
+
+.page {
+  margin: 16px;
+}
 </style>

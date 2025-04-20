@@ -13,7 +13,7 @@ TranscriptRouter.get("/", async (req, res) => {
     try {
         if (userId) {
             const transcriptData = await TranscriptModel.find({ userId });
-            res.send(transcriptData);
+            res.status(200).send({ data: transcriptData, status: 200 });
         } else {
             res.send({ "message": "Please provide a userId" });
         }
@@ -32,12 +32,12 @@ TranscriptRouter.get("/:id", async (req, res) => {
         if (id) {
             const findTranscript = await TranscriptModel.find({ _id: id });
             if (findTranscript.length > 0 && findTranscript[0].userId === req.userId) {
-                res.send(findTranscript);
+                res.status(200).send({ data: findTranscript[0], status: 200 });
             } else {
-                res.send({ "message": "Transcript not found or you do not have permission to view this transcript" });
+                res.status(404).send({ "message": "Transcript not found or you do not have permission to view this transcript", status: 404 });
             }
         } else {
-            res.send({ "message": "Please provide an ID" });
+            res.status(400).send({ "message": "Please provide an ID", status: 400 });
         }
     } catch (err) {
         console.log(err);
@@ -106,7 +106,7 @@ TranscriptRouter.post("/", upload.single('audio'), async (req, res) => {
 
         await newTranscript.save();
 
-        res.json({ message: 'Transcript saved successfully', data: newTranscript });
+        res.json({ message: 'Transcript saved successfully', data: newTranscript, status: 200 });
 
     } catch (err) {
         console.error(err);
@@ -124,12 +124,12 @@ TranscriptRouter.delete("/:id", async (req, res) => {
             const findTranscript = await TranscriptModel.find({ _id: id });
             if (findTranscript.length > 0 && findTranscript[0].userId === req.userId) {
                 await TranscriptModel.findByIdAndDelete({ _id: id });
-                res.send({ "message": "Transcript deleted successfully" });
+                res.status(200).send({ "message": "Transcript deleted successfully", status: 200 });
             } else {
-                res.send({ "message": "Transcript not found or you do not have permission to delete this transcript" });
+                res.status(404).send({ "message": "Transcript not found or you do not have permission to delete this transcript", status: 404 });
             }
         } else {
-            res.send({ "message": "Please provide an ID" });
+            res.status(400).send({ "message": "Please provide an ID", status: 400 });
         }
     } catch (err) {
         console.log(err);

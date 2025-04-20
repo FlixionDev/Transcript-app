@@ -8,22 +8,35 @@
             <!-- Right side: Create Transcript button and user section -->
             <div class="flex items-center space-x-4">
                 <button class="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-500"
-                    @click="$router.push('/create-transcript')">
+                    @click="$router.push('/transcribe/create')">
                     Create Transcript
                 </button>
-                <template v-if="true /* isLoggedIn */">
-                    <div class="flex items-center space-x-2 text-white">
-                        <el-icon>
-                            <User />
-                        </el-icon>
-                        <span>{{ "username" }}</span>
-                    </div>
+                <template v-if="isLoggedIn">
+                    <el-dropdown>
+                        <div
+                            class="flex items-center space-x-2 text-white text-base hover:outline-none hover:ring-0 hover:border-none focus:outline-none cursor-pointer">
+                            <el-icon class="w-6 h-6">
+                                <User />
+                            </el-icon>
+                            <span class="text-lg font-medium">{{ username }}</span>
+                        </div>
+                        <template #dropdown>
+                            <el-dropdown-menu class="!bg-indigo-600 border-none">
+                                <el-dropdown-item
+                                    class="!bg-indigo-600 !text-white !px-4 !py-2 !rounded-md hover:!bg-indigo-500 cursor-pointer"
+                                    @click="handleLogout">
+                                    Logout
+                                </el-dropdown-item>
+                            </el-dropdown-menu>
+                        </template>
+
+                    </el-dropdown>
                 </template>
-                <!-- <template v-else> -->
-                <button class="text-indigo-600 hover:text-indigo-500" @click="$router.push('/login')">
-                    Login
-                </button>
-                <!-- </template> -->
+                <template v-else-if="!isLoggedIn && route.path !== '/login'">
+                    <button class="text-indigo-600 hover:text-indigo-500" @click="$router.push('/login')">
+                        Login
+                    </button>
+                </template>
             </div>
         </div>
     </nav>
@@ -31,11 +44,23 @@
 
 <script setup>
 import { User } from '@element-plus/icons-vue'
-// import { useUserStore } from '~/store/user'
-// import { computed } from 'vue'
+import { ElDropdown, ElDropdownItem, ElDropdownMenu } from 'element-plus';
+import { ElIcon } from 'element-plus';
+import { useUserStore } from '~/store/user'
+import { computed } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 
-// Assuming a user store with isLoggedIn and username properties
-// const userStore = useUserStore()
-// const isLoggedIn = computed(() => userStore.isLoggedIn)
-// const username = computed(() => userStore.username)
+const userStore = useUserStore()
+const route = useRoute()
+const router = useRouter()
+const isLoggedIn = computed(() => userStore.isAuthenticated)
+const username = computed(() => userStore.user.name)
+
+const handleLogout = () => {
+
+    userStore.handleLogout()
+    alert('Logged out successfully');
+    router.push({ path: '/login' });
+};
+
 </script>
