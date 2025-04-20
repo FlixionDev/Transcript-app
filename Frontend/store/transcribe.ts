@@ -1,7 +1,7 @@
 import { ElMessage } from "element-plus";
 import { defineStore } from "pinia";
 import type { TranscribeItem } from "~/types";
-const apiPrefix = 'http://localhost:4000'
+export const apiPrefix = 'http://localhost:4000'
 export const useTranscribeStore = defineStore("transcribe", () => {
     const transcribeList = ref<TranscribeItem[]>([]);
     const transcribeItem = ref<TranscribeItem | null>(null);

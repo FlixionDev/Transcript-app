@@ -1,4 +1,5 @@
 import { defineStore } from "pinia";
+import { apiPrefix } from "./transcribe";
 
 export const useUserStore = defineStore("user", () => {
 
@@ -24,7 +25,7 @@ export const useUserStore = defineStore("user", () => {
     const isAuthenticated = computed(() => !!user.value?.token)
 
     const handleLogin = async ({ email, pass }: { email: string; pass: string }) => {
-        const data = await fetch("http://localhost:4000/user/login", {
+        const data = await fetch(`${apiPrefix}/user/login`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -46,7 +47,7 @@ export const useUserStore = defineStore("user", () => {
 
     const handleRegister = async ({ email, name, mob_no, pass }: { email: string; name: string; mob_no: number | undefined; pass: string }) => {
 
-        const data = await fetch("http://localhost:4000/user/register", {
+        const data = await fetch(`${apiPrefix}/user/register`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
